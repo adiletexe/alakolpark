@@ -1,0 +1,470 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Главная</title>
+
+    <link rel="icon" type="image/jpg" href="img/logo.jpg">
+
+    <!-- LINK BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+
+    <!-- LINK CSS STYLES -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- LINK JQUERY -->
+    <script src="{% static 'js/jQuery/jquery-3.6.3.min.js' %}"></script>
+
+    <!-- IMPORT HEADER & IMPORT FOOTER -->
+    <script>
+        $(function () {
+            $("#header").load("{% static 'header.html' %}");
+            $("#footer").load("{% static 'footer.html' %}");
+        });
+    </script>
+
+    <!-- IMPORT SWIPER -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+</head>
+
+<body>
+    <header id="header" class="header">
+        <div class="header__top">
+            <div class='container'>
+                <div class="header__row">
+                    <a href="tel:12-345-67890" class="header__number">
+                        <span><img src="img/phone.png" alt=""></span>
+                        <span>(12) 345 67890</span>
+                    </a>
+                    <a href="mailto:info.colorlib@gmail.com" class="header__email">
+                        <span><img src="{% static 'img/email.png' %}" alt=""></span>
+                        <span>info.colorlib@gmail.com</span>
+                    </a>
+                    <div class="header__socialNetworks">
+                        <a href="#" class="header__network">
+                            <img src="{% static 'img/instagram.svg' %}" alt="">
+                        </a>
+                        <a href="#" class="header__network">
+                            <img src="{% static 'img/whatsapp.svg'%}" alt=''>
+                        </a>
+                    </div>
+                    <a href="#" class="header__button">
+                        ЗАБРОНИРОВАТЬ
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class='container'>
+            <div class="header__bottom">
+                <div class="header__logo">
+                    <img src="{% static 'img/logo.png' %}" alt="">
+                </div>
+                <ul class="header__list">
+                    <li><a class="current" href="{% url 'index' %}">Главная</a></li>
+                    <li><a href="{% url 'prices' %}">Прайс-Лист</a></li>
+                    <li><a href="{% url 'map' %}">Как добраться?</a></li>
+                    <li><a href="{% url 'contacts' %}">Контакты</a></li>
+                </ul>
+                <div class="header__burger">
+                    <span></span><span></span><span></span>
+                </div>
+                <div class="header__menu">
+                    <ul>
+                        <li><a class="current" href="{% url 'index' %}">Главная</a></li>
+                        <li><a href="{% url 'prices' %}">Прайс-Лист</a></li>
+                        <li><a href="{% url 'map' %}">Как добраться?</a></li>
+                        <li><a href="{% url 'contacts' %}l">Контакты</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="welcome">
+
+            <div class="welcome__container">
+
+                <!-- SLIDER -->
+
+                <!-- Slider main container -->
+                <div class="swiper swiper-1">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">
+                            <div class="image1"></div>
+                            <div class="bg"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image2"></div>
+                            <div class="bg"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image3"></div>
+                            <div class="bg"></div>
+                        </div>
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+
+
+            <div class='container'>
+                <div class="welcome__column">
+                    <h1 class="welcome__title">
+                        Алаколь Парк
+                    </h1>
+                    <p class="welcome__subtitle">
+                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Rem modi odio a voluptatem explicabo
+                        accusantium!
+                    </p>
+                    <a href="" class="welcome__button">
+                        НАЧАТЬ СЕЙЧАС
+                    </a>
+                </div>
+                <div class="welcome__column">
+                    <div class="booking">
+                        <div class="booking__title">
+                            Забронируйте сейчас
+                        </div>
+                        <form method="post" action="{% url 'index' %}">
+                            {% csrf_token %}
+                            <div class="booking__in labeled">
+                                <label for="in">Дата прибытия</label>
+                                <input required type="date" name="start_date" id="in">
+                            </div>
+                            <div class="booking__out labeled">
+                                <label for="out">Дата выезда</label>
+                                <input required type="date" name="end_date" id="out">
+                            </div>
+                            <div class="booking__guests labeled">
+                                <label for="adults">Имя</label>
+                                <input required type="text" name="name" id="adults">
+                            </div>
+                            {% if name %}
+                            <div class="booking__rooms labeled">
+                                <p>{{ name }}, There are {{ available_rooms }} room(s) available</p>
+                            </div>
+                            {% else %}
+                            <div class="booking__rooms labeled">
+                                <label for="rooms">Фамилия</label>
+                                <input required type="text" name="surname" id="rooms">
+                            </div>
+                            {% endif %}
+                            <button type="submit">ПРОВЕРИТЬ ДОСТУПНОСТЬ</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="about">
+            <div class='container'>
+                <h2 class="about__title title">
+                    Oб Алаколе
+                </h2>
+                <div class="about__subtitle">
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora enim, quos magni quisquam
+                        ratione dignissimos eligendi impedit fugiat molestias sapiente. Sed dolores vero laboriosam
+                        exercitationem, sit quibusdam voluptate corporis et.
+                    </p>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolores, veniam.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="aboutus">
+            <div class='container'>
+                <div class="aboutus__elem">
+                    <div class="aboutus__subtitle subtitle">
+                        О нас
+                    </div>
+                    <h2 class="aboutus__title title">
+                        Lorem ipsum dolor sit amet consectetur
+                    </h2>
+                    <div class="aboutus__text">
+                        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illo qui repudiandae assumenda quae.
+                        Ea dolor, vitae nisi nam eveniet illo, illum non ipsum amet voluptates quae, adipisci
+                        necessitatibus. Perspiciatis, voluptas.
+                    </div>
+                </div>
+                <div class="aboutus__elem">
+                    <img src="img/beds.png" alt="">
+                </div>
+            </div>
+        </section>
+        <a class="weatherwidget-io" href="https://forecast7.com/ru/50d9370d86/alakol/" data-label_1="АЛАКОЛЬ" data-label_2="WEATHER" data-font="Verdana" data-theme="mountains" data-shadow="rgba(31, 47, 48, 0.61)" data-textcolor="#000000" data-highcolor="#270808" data-lowcolor="#000000" data-mooncolor="#b5d7e0" data-cloudcolor="#000000" data-cloudfill="#000000" data-snowcolor="#020000" >АЛАКОЛЬ WEATHER</a>
+<script>
+!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src='https://weatherwidget.io/js/widget.min.js';fjs.parentNode.insertBefore(js,fjs);}}(document,'script','weatherwidget-io-js');
+</script>
+        <section class="services">
+            <div class='container'>
+                <div class="services__subtitle subtitle">
+                    Что мы делаем
+                </div>
+                <h2 class="services__title title">
+                    Наш сервис
+                </h2>
+                <div class="services__bottom">
+                    <div class="services__elem">
+                        <div class="services__icon">
+
+                        </div>
+                        <div class="services__elem-title clickable">
+                            Travel Plan
+                        </div>
+                        <div class="services__elem-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur incidunt officia tenetur
+                            dolores minima dolorum ullam repellat obcaecati aliquid nulla, illo illum facilis id modi
+                            commodi! Nihil, cupiditate similique. Autem?
+                        </div>
+                    </div>
+                    <div class="services__elem">
+                        <div class="services__icon">
+
+                        </div>
+                        <div class="services__elem-title clickable">
+                            Cathering Services
+                        </div>
+                        <div class="services__elem-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur incidunt officia tenetur
+                            dolores minima dolorum ullam repellat obcaecati aliquid nulla, illo illum facilis id modi
+                            commodi! Nihil, cupiditate similique. Autem?
+                        </div>
+                    </div>
+                    <div class="services__elem">
+                        <div class="services__icon">
+
+                        </div>
+                        <div class="services__elem-title clickable">
+                            Babysitting
+                        </div>
+                        <div class="services__elem-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur incidunt officia tenetur
+                            dolores minima dolorum ullam repellat obcaecati aliquid nulla, illo illum facilis id modi
+                            commodi! Nihil, cupiditate similique. Autem?
+                        </div>
+                    </div>
+                    <div class="services__elem">
+                        <div class="services__icon">
+
+                        </div>
+                        <div class="services__elem-title clickable">
+                            Laundry
+                        </div>
+                        <div class="services__elem-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur incidunt officia tenetur
+                            dolores minima dolorum ullam repellat obcaecati aliquid nulla, illo illum facilis id modi
+                            commodi! Nihil, cupiditate similique. Autem?
+                        </div>
+                    </div>
+                    <div class="services__elem">
+                        <div class="services__icon">
+
+                        </div>
+                        <div class="services__elem-title clickable">
+                            Hire Driver
+                        </div>
+                        <div class="services__elem-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur incidunt officia tenetur
+                            dolores minima dolorum ullam repellat obcaecati aliquid nulla, illo illum facilis id modi
+                            commodi! Nihil, cupiditate similique. Autem?
+                        </div>
+                    </div>
+                    <div class="services__elem">
+                        <div class="services__icon">
+
+                        </div>
+                        <div class="services__elem-title clickable">
+                            Bar & Drink
+                        </div>
+                        <div class="services__elem-text">
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur incidunt officia tenetur
+                            dolores minima dolorum ullam repellat obcaecati aliquid nulla, illo illum facilis id modi
+                            commodi! Nihil, cupiditate similique. Autem?
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="photos">
+            <div class='container'>
+                <!-- Slider main container -->
+                <div class="swiper swiper-2">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        <div class="swiper-slide">
+                            <div class="image1 image"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image2 image"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image3 image"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image4 image"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image5 image"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image6 image"></div>
+                        </div>
+                        <div class="swiper-slide">
+                            <div class="image7 image"></div>
+                        </div>
+                    </div>
+                    <!-- If we need pagination -->
+                    <div class="swiper-pagination"></div>
+
+                    <!-- If we need navigation buttons -->
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </section>
+        {% if reviews %}
+        <section class="testimonals">
+            <div class='container'>
+                <h2 class="testimonals__subtitle subtitle">
+                    Отзывы
+                </h2>
+                <div class="testimonals__title title">
+                    Что говорят клиенты?
+                </div>
+
+                <!-- Slider main container -->
+                <div class="swiper swiper-3">
+                    <!-- Additional required wrapper -->
+                    <div class="swiper-wrapper">
+                        <!-- Slides -->
+                        {% for review in reviews %}
+                            <div class="swiper-slide">
+                                <div class="testimonals__review">
+                                    {{ review.review_text }}
+                                </div>
+                                <div class="testimonals__guy">
+                                    <pre>{{ review.full_name }} </pre>
+                                    <div class="testimonals__stars">
+                                        {% if review.rating == 5 %}
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                        {% elif review.rating == 4 %}
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                        {% elif review.rating == 3 %}
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                        {% elif review.rating == 2 %}
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                        {% elif review.rating == 1 %}
+                                            <img src="{% static 'img/star.png' %}" alt="">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+
+                <!-- If we need navigation buttons -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </div>
+        </section>
+        {% endif %}
+    </main>
+
+    <footer class="footer">
+        <div class='container'>
+            <div class="footer__top">
+                <div class="footer__text1">
+                    Интересуют детали? Закажите звонок, мы обсудим все ваши пожелания!
+                </div>
+                <a href="tel:+77778131209" class="footer__call">
+                    ПОЗВОНИТЬ
+                </a>
+            </div>
+            <div class="footer__data">
+                <div class="footer__elem">
+                    <div class="footer__icon">
+                        <img src="{% static 'img/phone.png' %}" alt=''>
+                    </div>
+                    <div class="footer__text2">
+                        <a href="">+7 (701) 243-43-66</a>
+                        <a href="">+7 (705) 342-41-77</a>
+                        <a href="">+7 (778) 756-45-24</a>
+                    </div>
+                </div>
+                <div class="footer__elem">
+                    <div class="footer__icon">
+                        <img src="{% static 'img/location.png' %}" alt=''>
+                    </div>
+                    <div class="footer__text2">
+                        Алматинская область, Алакольский район, с. Акши
+                    </div>
+                </div>
+                <div class="footer__elem">
+                    <div class="footer__icon">
+                        <img src="{% static 'img/email.png' %}" alt=''>
+                    </div>
+                    <div class="footer__text2">
+                        alakol-park@gmail.com
+                    </div>
+                </div>
+            </div>
+            <div class="footer__bottom">
+                <a href="#header">
+                    <img src="{% static 'img/arrow-up.svg' %}" alt="">
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- IMPORT SWIPER -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
+
+    <!-- IMPORT Sliders -->
+    <script src="{% static 'js/sliders.js' %}"></script>
+
+    <!-- IMPORT BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+
+    <!-- IMPORT SWIPER SETTINGS -->
+    <script src="{% static 'js/swiper.js' %}"></script>
+
+    <!-- IMPORT MAIN SCRIPT FILES -->
+    <script src="{% static 'js/scripts.js' %}"></script>
+    <script src="{% static 'js/burgerMenu.js' %}"></script>
+</body>
+
+</html>
